@@ -1,14 +1,6 @@
-package data_structures
+package dynamic_array
 
-import (
-	"errors"
-)
-
-var (
-	ErrIndexOutOfBounds  = errors.New("index out of bounds")
-	ErrNotAllItemsCopied = errors.New("not all items copied")
-	ErrUnreachable       = errors.New("unreachable")
-)
+import "dsa/internal/data_structures"
 
 type DynamicArray[T any] struct {
 	items    []T
@@ -30,7 +22,7 @@ func NewDynamicArrayFromSlice[T any](arr []T) *DynamicArray[T] {
 func (da *DynamicArray[T]) Get(i int) (T, error) {
 	var rv T
 	if i >= da.size || i < 0 {
-		return rv, ErrIndexOutOfBounds
+		return rv, data_structures.ErrIndexOutOfBounds
 	}
 
 	return da.items[i], nil
@@ -38,7 +30,7 @@ func (da *DynamicArray[T]) Get(i int) (T, error) {
 
 func (da *DynamicArray[T]) Set(i int, v T) error {
 	if i >= da.size || i < 0 {
-		return ErrIndexOutOfBounds
+		return data_structures.ErrIndexOutOfBounds
 	}
 
 	da.items[i] = v
@@ -64,7 +56,7 @@ func (da *DynamicArray[T]) Add(v T) error {
 func (da *DynamicArray[T]) Remove(i int) (T, error) {
 	var rv T
 	if i >= da.size || i < 0 {
-		return rv, ErrIndexOutOfBounds
+		return rv, data_structures.ErrIndexOutOfBounds
 	}
 
 	saved_v, err := da.Get(i)
@@ -75,7 +67,7 @@ func (da *DynamicArray[T]) Remove(i int) (T, error) {
 	expected_copied := da.size - i - 1
 	copied_items := copy(da.items[i:], da.items[i+1:da.size])
 	if copied_items != expected_copied {
-		return rv, ErrNotAllItemsCopied
+		return rv, data_structures.ErrNotAllItemsCopied
 	}
 
 	da.size--
@@ -94,7 +86,7 @@ func (da *DynamicArray[T]) doubleArray() error {
 	new_arr := make([]T, da.capacity)
 	copied := copy(new_arr, da.items)
 	if copied != da.size {
-		return ErrNotAllItemsCopied
+		return data_structures.ErrNotAllItemsCopied
 	}
 
 	da.items = new_arr
