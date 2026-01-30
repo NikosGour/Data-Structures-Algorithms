@@ -65,3 +65,14 @@ func TestInsertionSort(t *testing.T) {
 		})
 	}
 }
+
+func TestSelectionSort(t *testing.T) {
+	assert := assert.New(t)
+	for _, test := range testCases {
+		t.Run(test.desc, func(t *testing.T) {
+			sorted_arr := SelectionSort(test.startingArr)
+			is_sorted := slices.Equal(sorted_arr, test.sortedArr)
+			assert.True(is_sorted)
+		})
+	}
+}
