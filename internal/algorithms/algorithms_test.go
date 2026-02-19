@@ -87,3 +87,14 @@ func TestQuickSort(t *testing.T) {
 		})
 	}
 }
+
+func TestMergeSort(t *testing.T) {
+	assert := assert.New(t)
+	for _, test := range testCases {
+		t.Run(test.desc, func(t *testing.T) {
+			sorted_arr := MergeSort(test.startingArr)
+			is_sorted := slices.Equal(sorted_arr, test.sortedArr)
+			assert.True(is_sorted)
+		})
+	}
+}
